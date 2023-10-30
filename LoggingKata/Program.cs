@@ -54,20 +54,19 @@ namespace LoggingKata
             for (int i = 0; i < locations.Length; i++)   // Do a loop for your locations to grab each location as the origin (perhaps: `locA`)
             { 
                 var locA = locations[i];
-                var corA = new GeoCoordinate();    // Create a new corA Coordinate with your locA's lat and long
-                corA.Latitude = locA.Location.Latitude;
-                corA.Longitude = locA.Location.Longitude;
+                var corA = new GeoCoordinate(locA.Location.Latitude, locA.Location.Longitude);   // Create a new corA Coordinate with your locA's lat and long
+                
 
                 for (int j = 0; j < locations.Length; j++)   // Now, do another loop on the locations with the scope of your first loop, so you can grab the "destination" location (perhaps: `locB`)
                 {
                     var locB = locations[j];
-                    var corB = new GeoCoordinate();  // Create a new Coordinate with your locB's lat and long
-                    corB.Latitude = locB.Location.Latitude;
-                    corB.Longitude = locB.Location.Longitude;
+                    var corB = new GeoCoordinate(locB.Location.Latitude, locB.Location.Longitude);  // Create a new Coordinate with your locB's lat and long
 
-                    if (corA.GetDistanceTo(corB) > totalDistance)
+                    double currentDistance = corA.GetDistanceTo(corB);
+
+                    if (currentDistance > totalDistance)
                     {
-                        totalDistance = corA.GetDistanceTo(corB);
+                        totalDistance = currentDistance;
                         tacoBell1 = locA;
                         tacoBell2 = locB;
                     }
